@@ -1,0 +1,643 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Luxder">
+<meta name="theme-color" content="#0B0A16">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦆</text></svg>">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230B0A16'/><text y='.9em' font-size='80' x='8'>🦆</text></svg>">
+<title>Luxder</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@600;800&family=Rubik+Mono+One&family=Rubik:wght@500;800&display=swap">
+<style>
+:root{
+  --ink:#0B0A16; --card:#17152B; --line:#2A2745; --cream:#FFF4DC; --muted:#A9A4C7;
+  --a:#FF4FA3; --b:#C9FF3A; --c:#5EE3FF; --d:#FFC63A; --ash:#5a1236; --dsh:#5a3a08;
+  --display:'Bangers',Impact,'Arial Black',sans-serif; --body:'Nunito','Segoe UI',system-ui,sans-serif;
+  --r:22px; --bg1:#2a1440; --bg2:#0d2a3a; --shadow:0 6px 0 #00000080;
+  --aG1:rgba(255,79,163,.25); --aG2:rgba(255,79,163,.45); --bG1:rgba(201,255,58,.25); --bG2:rgba(201,255,58,.55); --bPad:#2f3a1c; --tagA:#2b1636; --tagB:#1f2a0b;
+}
+.pop{
+  --ink:#1B2CFF; --card:#1120D6; --line:#0A12A0; --cream:#FFFFFF; --muted:#C9CEFF;
+  --a:#FF6A00; --b:#F5FF00; --c:#FFFFFF; --d:#F5FF00; --ash:#7a2a00; --dsh:#5a5a00;
+  --display:'Rubik Mono One','Arial Black',Impact,sans-serif; --body:'Rubik','Segoe UI',system-ui,sans-serif;
+  --r:999px; --bg1:#3a4bff; --bg2:#0a10a0; --shadow:0 6px 0 #000;
+  --aG1:rgba(255,106,0,.3); --aG2:rgba(255,106,0,.5); --bG1:rgba(245,255,0,.3); --bG2:rgba(245,255,0,.6); --bPad:#3a44c0; --tagA:#2a1a00; --tagB:#2a2a00;
+}
+.pop h1,.pop h2{font-size:clamp(26px,7.5vw,36px);line-height:1.05;letter-spacing:0}
+.pop button{font-size:clamp(17px,4.6vw,22px);letter-spacing:0;border:3px solid #000}
+.pop .big{font-size:clamp(64px,22vw,100px)}
+.pop .tag{border-radius:6px;transform:rotate(-2deg);background:var(--b);color:#000;border-color:#000}
+.pop .tag.lime{background:var(--a);color:#000}
+.pop .card{border-color:#000;box-shadow:6px 6px 0 #000;border-radius:18px}
+.pop .top b{color:var(--b);text-shadow:3px 3px 0 #000;font-size:20px}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{margin:0;background:var(--ink);color:var(--cream);font-family:var(--body);font-weight:600;padding-block:0;padding-inline:16px;overflow-x:hidden;
+  background-image:radial-gradient(ellipse at 20% 0%,var(--bg1) 0,transparent 55%),radial-gradient(ellipse at 90% 100%,var(--bg2) 0,transparent 50%)}
+.app{max-width:440px;margin:0 auto;min-height:100vh;min-height:100dvh;padding-bottom:env(safe-area-inset-bottom);display:flex;flex-direction:column}
+.top{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:12px 0 6px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.top b{font-family:var(--display);font-size:26px;letter-spacing:.04em;color:var(--a);text-shadow:3px 3px 0 var(--ash);cursor:pointer}
+.top .sw{display:flex;gap:6px}
+.top .sw button{min-height:0;padding:6px 10px;font-size:12px;font-family:var(--body);font-weight:800;border-radius:999px;background:var(--card);color:var(--cream);border:2px solid var(--line);box-shadow:none;letter-spacing:.06em}
+.top .sw button.on{background:var(--b);color:#000;border-color:var(--b)}
+.screen{display:none;flex:1;flex-direction:column;gap:14px;padding-block:8px 24px;animation:pop .28s cubic-bezier(.2,1.4,.4,1)}
+.screen.on{display:flex}
+@keyframes pop{from{transform:scale(.94);opacity:0}to{transform:scale(1);opacity:1}}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(38px,10.5vw,52px);line-height:.95;margin:0;letter-spacing:.03em;text-wrap:balance}
+h2{font-family:var(--display);font-weight:400;font-size:clamp(28px,7.5vw,38px);line-height:1;margin:0;letter-spacing:.03em;text-wrap:balance}
+p{margin:0;font-size:18px;line-height:1.35}
+.small{font-size:13px;color:var(--muted);line-height:1.4}
+.center{text-align:center}
+.spacer{flex:1}
+.btns{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.btns.col{grid-template-columns:1fr}
+.btns.three{grid-template-columns:1fr 1fr 1fr}
+button{-webkit-appearance:none;appearance:none;touch-action:manipulation;font-family:var(--display);font-size:clamp(22px,6.5vw,30px);letter-spacing:.04em;border:0;border-radius:var(--r);padding:20px 10px;color:#0B0A16;cursor:pointer;min-height:92px;line-height:1;box-shadow:var(--shadow);transition:transform .08s}
+button:active{transform:translateY(4px);box-shadow:0 2px 0 #00000080}
+button:focus-visible{outline:4px solid var(--c);outline-offset:3px}
+button:disabled{opacity:.35}
+.yes{background:var(--a)} .no{background:var(--b)}
+.ghost{background:var(--card);color:var(--cream);border:3px solid var(--line);box-shadow:none;min-height:60px;font-size:20px;padding:12px}
+.card{background:var(--card);border:3px solid var(--line);border-radius:26px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.opts{display:grid;grid-template-columns:1fr;gap:10px}
+.opt{background:var(--card);border:3px solid var(--line);border-radius:22px;padding:12px 16px;display:flex;align-items:center;gap:14px;min-height:0;box-shadow:none;color:var(--cream);font-family:var(--body);font-weight:800;font-size:18px;text-align:left}
+.opt svg{width:52px;height:52px;flex:none}
+.opt:active,.opt.pick{border-color:var(--a)}
+.who{font-family:var(--display);font-size:22px;letter-spacing:.05em;color:var(--c)}
+.who.f{color:var(--a)} .who.m{color:var(--c)}
+.duoav{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.duoav .card{align-items:center;text-align:center;padding:12px}
+.duoav svg{width:100%;max-width:150px;height:auto}
+.duoav .lbl{font-family:var(--display);font-size:20px;letter-spacing:.05em}
+.pad{aspect-ratio:1;max-width:250px;width:78%;margin:0 auto;border-radius:50%;background:var(--card);border:6px solid var(--line);display:grid;place-items:center;position:relative;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.pad.hot{border-color:var(--a);box-shadow:0 0 0 12px var(--aG1),0 0 60px var(--aG2)}
+.pad.go{border-color:var(--b);background:var(--bPad);box-shadow:0 0 0 14px var(--bG1),0 0 80px var(--bG2)}
+.pad svg{width:70%;height:70%}
+.pad .ring{position:absolute;inset:-6px;border-radius:50%;border:6px solid var(--b);clip-path:inset(0 0 var(--cut,100%) 0);transition:clip-path .05s linear}
+.status{font-family:var(--display);font-size:22px;letter-spacing:.04em;color:var(--c);text-align:center;min-height:28px}
+.big{font-family:var(--display);font-size:clamp(84px,30vw,140px);line-height:.9;color:var(--d);text-shadow:5px 5px 0 var(--dsh);text-align:center}
+.verdict{font-size:20px;text-align:center;line-height:1.35}
+.lvl{display:flex;gap:6px}
+.lvl i{flex:1;height:10px;border-radius:99px;background:var(--line)} .lvl i.on{background:var(--a)}
+.tag{display:inline-block;background:var(--tagA);border:2px solid var(--a);color:var(--a);border-radius:999px;padding:4px 12px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;align-self:flex-start}
+.tag.lime{background:var(--tagB);border-color:var(--b);color:var(--b)}
+.report{display:grid;grid-template-columns:1fr auto;gap:8px 14px;font-size:17px;align-items:center}
+.report b{font-family:var(--display);font-size:24px;color:var(--b);letter-spacing:.04em;font-variant-numeric:tabular-nums;text-align:right}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:var(--card);border:3px solid var(--line);border-radius:999px;padding:10px 16px;font-family:var(--display);font-size:20px;letter-spacing:.04em;display:flex;align-items:center;gap:8px}
+.chip.m{border-color:var(--c);color:var(--c)} .chip.f{border-color:var(--a);color:var(--a)}
+.chip button{min-height:0;padding:2px 8px;font-size:16px;background:transparent;color:var(--muted);box-shadow:none;border:0;font-family:var(--body)}
+.score{display:grid;gap:8px}
+.score .row{display:grid;grid-template-columns:1fr auto;align-items:center;background:var(--card);border:3px solid var(--line);border-radius:18px;padding:10px 14px}
+.score .row.lead{border-color:var(--d)}
+.score .t{font-family:var(--display);font-size:20px;letter-spacing:.05em}
+.score .n{font-family:var(--display);font-size:40px;line-height:1;color:var(--d);font-variant-numeric:tabular-nums}
+.timer{font-family:var(--display);font-size:clamp(70px,24vw,110px);line-height:.9;text-align:center;color:var(--b);font-variant-numeric:tabular-nums}
+.secret{filter:blur(14px);transition:filter .2s} .secret.show{filter:none}
+.bike{font-size:clamp(90px,34vw,150px);text-align:center;line-height:1;animation:ride 1.4s ease-in-out infinite}
+@keyframes ride{0%,100%{transform:translateX(-8px) rotate(-3deg)}50%{transform:translateX(8px) rotate(3deg)}}
+.daretxt{font-family:var(--display);font-size:clamp(28px,8vw,40px);line-height:1.05;letter-spacing:.03em;color:var(--d);text-align:center}
+.prize{color:var(--d);text-align:center;font-size:16px}
+canvas#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9}
+@media (prefers-reduced-motion:reduce){.screen,.bike{animation:none}}
+</style>
+
+</head>
+<body>
+<canvas id="fx"></canvas>
+<div class="app">
+  <div class="top"><b data-go="s-beta">Luxder</b><div class="sw"><button id="lang-pt" class="on">PT</button><button id="lang-en">EN</button><button id="th-neon" class="on">NÉON</button><button id="th-pop">POP</button></div></div>
+
+  <section class="screen on" id="s-beta">
+    <span class="tag" data-i="beta.tag"></span>
+    <h1 data-i="beta.h"></h1>
+    <p data-i="beta.p"></p>
+    <div class="spacer"></div>
+    <div class="btns"><button class="yes" data-go="s-q" data-i="beta.yes"></button><button class="no" data-go="s-recusa" data-i="beta.no"></button></div>
+    <div class="btns col"><button class="ghost" data-go="s-setup" data-i="beta.game"></button></div>
+    <p class="small" data-i="beta.foot"></p>
+  </section>
+
+  <section class="screen" id="s-recusa">
+    <span class="tag lime" data-i="rec.tag"></span>
+    <h1 data-i="rec.h"></h1>
+    <p data-i="rec.p"></p>
+    <div class="spacer"></div>
+    <div class="btns col"><button class="ghost" data-go="s-beta" data-i="rec.btn"></button></div>
+  </section>
+
+  <section class="screen" id="s-q">
+    <span class="tag" id="qtag"></span>
+    <div class="who" id="qwho"></div>
+    <h2 id="qtext"></h2>
+    <div class="opts" id="opts"></div>
+    <p class="small" id="qhint"></p>
+  </section>
+
+  <section class="screen" id="s-avatar">
+    <span class="tag" data-i="av.tag"></span>
+    <div class="duoav">
+      <div class="card"><div class="lbl" style="color:var(--c)" data-i="av.them"></div><div id="av-eles"></div></div>
+      <div class="card"><div class="lbl" style="color:var(--b)" data-i="av.her"></div><div id="av-ela"></div></div>
+    </div>
+    <h2 id="avname"></h2>
+    <p class="verdict" id="avmsg" style="color:var(--c)"></p>
+    <div class="spacer"></div>
+    <div class="btns col"><button class="yes" data-go="s-scan" data-i="av.btn"></button></div>
+  </section>
+
+  <section class="screen" id="s-scan">
+    <span class="tag" data-i="scan.tag"></span>
+    <h2 id="scan-title"></h2>
+    <div class="pad" id="pad"><div class="ring"></div>
+      <svg viewBox="0 0 100 100" fill="none" stroke="var(--a)" stroke-width="4" stroke-linecap="round">
+        <path d="M50 18c-18 0-30 13-30 30v10"/><path d="M50 28c-12 0-20 9-20 20v18"/><path d="M50 38c-6 0-10 4-10 10v24"/>
+        <path d="M50 48v22"/><path d="M60 38c6 2 10 7 10 14v20"/><path d="M60 26c12 3 20 12 20 24v14"/><path d="M50 18c18 0 30 13 30 30"/>
+      </svg></div>
+    <div class="status" id="status"></div>
+    <p class="small center" data-i="scan.foot"></p>
+  </section>
+
+  <section class="screen" id="s-verdict">
+    <span class="tag" data-i="v.tag"></span>
+    <div class="big" id="pct">73%</div>
+    <p class="verdict" id="vtext"></p>
+    <p class="small center" data-i="v.src"></p>
+    <div class="spacer"></div>
+    <p class="small center" data-i="v.ask"></p>
+    <div class="btns"><button class="yes" data-go="s-match" data-i="v.ok"></button><button class="no" id="chumbar" data-i="v.fail"></button></div>
+  </section>
+
+  <section class="screen" id="s-match">
+    <span class="tag" data-i="m.tag"></span>
+    <div class="big" style="color:var(--a);text-shadow:5px 5px 0 var(--ash)">97%</div>
+    <h2 data-i="m.h"></h2>
+    <p data-i="m.p"></p>
+    <div class="spacer"></div>
+    <div class="btns"><button class="yes" data-go="s-setup" data-i="m.game"></button><button class="ghost" data-go="s-report" data-i="m.rep"></button></div>
+  </section>
+
+  <section class="screen" id="s-castigo">
+    <span class="tag lime" data-i="c.tag"></span>
+    <div class="lvl"><i></i><i></i><i></i></div>
+    <h2 id="ctitle"></h2>
+    <div class="card"><p id="cwho" style="color:var(--d)"></p><p id="ctext"></p></div>
+    <p class="small" id="cmeta"></p>
+    <div class="spacer"></div>
+    <div class="btns"><button class="yes" data-go="s-scan" data-i="c.done"></button><button class="no" id="chumbar2" data-i="c.again"></button></div>
+    <div class="btns col"><button class="ghost" data-go="s-win" data-i="c.won"></button></div>
+  </section>
+
+  <section class="screen" id="s-win">
+    <span class="tag lime" data-i="w.tag"></span>
+    <h1 data-i="w.h"></h1>
+    <p data-i="w.p"></p>
+    <div class="spacer"></div>
+    <div class="btns"><button class="ghost" data-go="s-report" data-i="w.rep"></button><button class="ghost" data-go="s-beta" data-i="w.restart"></button></div>
+  </section>
+
+  <section class="screen" id="s-report">
+    <span class="tag" data-i="r.tag"></span>
+    <h2 data-i="r.h"></h2>
+    <div class="card report">
+      <span data-i="r.rigor"></span><b>94%</b>
+      <span data-i="r.pac"></span><b id="r-pac">12%</b>
+      <span data-i="r.bugs"></span><b id="r-bugs">0</b>
+      <span data-i="r.acc"></span><b id="r-acc">0%</b>
+      <span data-i="r.rec"></span><b data-i="r.recv"></b>
+    </div>
+    <p class="small" data-i="r.foot"></p>
+    <div class="spacer"></div>
+    <div class="btns col"><button class="ghost" data-go="s-beta" data-i="r.btn"></button></div>
+  </section>
+
+  <!-- ===== JOGO: CORRIDA À BICICLETA ===== -->
+  <section class="screen" id="s-setup">
+    <span class="tag" data-i="g.tag"></span>
+    <h1 data-i="g.h"></h1>
+    <p data-i="g.p"></p>
+    <div class="chips" id="chips"></div>
+    <div class="btns"><button class="ghost" id="add-m" data-i="g.addm"></button><button class="ghost" id="add-f" data-i="g.addf"></button></div>
+    <div class="card"><p id="g-mode" style="color:var(--d)"></p><p class="small" id="g-modep"></p></div>
+    <div class="spacer"></div>
+    <div class="btns col"><button class="yes" id="g-start" disabled data-i="g.start"></button></div>
+  </section>
+
+  <section class="screen" id="s-pair">
+    <span class="tag" data-i="pr.tag"></span>
+    <div class="who" id="pr-who"></div>
+    <h2 id="pr-q"></h2>
+    <p class="small" id="pr-hint"></p>
+    <div class="opts" id="pr-opts"></div>
+  </section>
+
+  <section class="screen" id="s-pairs">
+    <span class="tag" data-i="prs.tag"></span>
+    <h2 data-i="prs.h"></h2>
+    <div class="score" id="pairs-list"></div>
+    <p class="small" data-i="prs.p"></p>
+    <div class="spacer"></div>
+    <div class="btns col"><button class="yes" id="prs-go" data-i="prs.btn"></button></div>
+  </section>
+
+  <section class="screen" id="s-score">
+    <span class="tag" id="sc-tag"></span>
+    <div class="score" id="sc-list"></div>
+    <h2 id="sc-title"></h2>
+    <p class="verdict" id="sc-text"></p>
+    <p class="prize" id="sc-prize"></p>
+    <div class="spacer"></div>
+    <div class="btns col"><button class="yes" id="sc-next" data-i="sc.next"></button></div>
+  </section>
+
+  <section class="screen" id="s-reflex">
+    <span class="tag" data-i="rf.tag"></span>
+    <div class="who" id="rf-who"></div>
+    <h2 data-i="rf.h"></h2>
+    <div class="pad" id="rfpad"><div class="status" id="rf-status" style="font-size:28px"></div></div>
+    <p class="verdict" id="rf-res" style="min-height:52px"></p>
+  </section>
+
+  <section class="screen" id="s-guess">
+    <span class="tag" id="gs-tag"></span>
+    <div class="who" id="gs-who"></div>
+    <h2 id="gs-q"></h2>
+    <p class="small" id="gs-hint"></p>
+    <div class="opts" id="gs-opts"></div>
+  </section>
+
+  <section class="screen" id="s-chal">
+    <span class="tag" data-i="ch.tag"></span>
+    <div class="who" id="ch-who"></div>
+    <h2 id="ch-title"></h2>
+    <div class="card center"><p class="secret" id="ch-word" style="font-family:var(--display);font-size:30px;letter-spacing:.04em;color:var(--d)"></p></div>
+    <div class="timer" id="ch-timer" hidden>20</div>
+    <div class="btns col" id="ch-ctl"><button class="ghost" id="ch-reveal" data-i="ch.reveal"></button><button class="yes" id="ch-start" disabled data-i="ch.start"></button></div>
+    <div class="btns" id="ch-judge" hidden><button class="yes" id="ch-ok" data-i="ch.ok"></button><button class="no" id="ch-fail" data-i="ch.fail"></button></div>
+    <p class="small" id="ch-hint"></p>
+  </section>
+
+  <section class="screen" id="s-dare">
+    <span class="tag lime" data-i="d.tag"></span>
+    <div class="who" id="d-who"></div>
+    <div class="card"><p class="daretxt" id="d-text"></p><p class="small center" id="d-sub"></p></div>
+    <div class="timer" id="d-timer">10</div>
+    <div class="btns col" id="d-ctl"><button class="yes" id="d-start" data-i="d.start"></button></div>
+    <div class="btns" id="d-judge" hidden><button class="yes" id="d-ok" data-i="d.ok"></button><button class="no" id="d-fail" data-i="d.fail"></button></div>
+    <p class="small center" data-i="d.hint"></p>
+  </section>
+
+  <section class="screen" id="s-final">
+    <span class="tag lime" data-i="f.tag"></span>
+    <div class="bike">🚲</div>
+    <h1 id="f-title"></h1>
+    <p class="verdict" id="f-prize"></p>
+    <div class="card"><p id="f-cwho" style="color:var(--d)"></p><p id="f-ctext"></p></div>
+    <p class="small" id="f-note"></p>
+    <div class="spacer"></div>
+    <div class="btns"><button class="ghost" id="f-again" data-i="f.again"></button><button class="ghost" id="f-prize2" data-i="f.prize2"></button></div>
+    <div class="btns col"><button class="yes" id="f-rematch" data-i="f.rematch"></button></div>
+    <div class="btns col"><button class="ghost" data-go="s-beta" data-i="f.home"></button></div>
+  </section>
+</div>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const rnd=a=>a[Math.floor(Math.random()*a.length)];
+const buzz=p=>{try{navigator.vibrate&&navigator.vibrate(p)}catch(e){}};
+let lang='pt';const L=x=>typeof x==='string'?x:(x[lang]??x.pt);
+const B=(pt,en)=>({pt,en});
+
+/* ---------- i18n ---------- */
+const I={
+ 'beta.tag':B('Recrutamento de tester','Tester recruitment'),
+ 'beta.h':B('Feita por 2 gajos em 25 minutos.','Built by 2 guys in 25 minutes.'),
+ 'beta.p':B('Sem investidores, sem propósito sério. Precisamos de uma tester com bom gosto. Demora 20 segundos.','No investors, no serious purpose. We need a tester with good taste. Takes 20 seconds.'),
+ 'beta.yes':B('Aceito testar','I\'ll test it'),'beta.no':B('Não, obrigada','No, thanks'),
+ 'beta.game':B('🚲 Jogo: Corrida à Bicicleta (2-4)','🚲 Game: Race for the Bike (2-4)'),
+ 'beta.foot':B('Não guardamos nada. Zero fotos. Isto morre aqui. Um "não" bem dado também conta como feedback.','We store nothing. Zero photos. This dies here. A good "no" counts as feedback too.'),
+ 'rec.tag':B('Feedback recebido','Feedback received'),'rec.h':B('A app é tão má que nem merece teste.','The app is so bad it doesn\'t deserve a test.'),
+ 'rec.p':B('Resposta certa. +10 pontos de inteligência emocional. Obrigado, tester.','Correct answer. +10 emotional intelligence points. Thank you, tester.'),
+ 'rec.btn':B('Recomeçar para a próxima tester','Restart for the next tester'),
+ 'av.tag':B('O avatar que os define','The avatar that defines them'),'av.them':B('Segundo eles','According to them'),'av.her':B('Segundo ela','According to her'),'av.btn':B('Validar com o scanner','Validate with the scanner'),
+ 'scan.tag':B('Validação biométrica','Biometric validation'),'scan.foot':B('Tecnologia de ponta: 2 segundos, 3 imperiais, 0 ciência.','Cutting-edge tech: 2 seconds, 3 beers, 0 science.'),
+ 'v.tag':B('Resultado','Result'),'v.src':B('Fonte: estudo inventado da Universidade de Alfama, 2026.','Source: made-up study, University of Alfama, 2026.'),
+ 'v.ask':B('Como tester, avalia esta piada:','As a tester, rate this joke:'),'v.ok':B('Aprovado','Approved'),'v.fail':B('Chumbado','Rejected'),
+ 'm.tag':B('Aprovado','Approved'),'m.h':B('Match. Algoritmo treinado por 2 gajos e 3 imperiais.','Match. Algorithm trained by 2 guys and 3 beers.'),
+ 'm.p':B('Selo: Verificado ✅ por um segurança do Lux.','Badge: Verified ✅ by a Lux bouncer.'),'m.game':B('🚲 Jogo','🚲 Game'),'m.rep':B('Relatório','Report'),
+ 'c.tag':B('Chumbado · castigo para os devs','Rejected · forfeit for the devs'),'c.done':B('Cumprido. Novo scan','Done. New scan'),'c.again':B('Chumbar outra vez','Reject again'),'c.won':B('Ela ganhou. Acabou.','She won. It\'s over.'),
+ 'w.tag':B('Vitória total','Total victory'),'w.h':B('Arrasaste dois rapazes e uma app inteira. 🏆','You crushed two guys and an entire app. 🏆'),
+ 'w.p':B('Eles vão precisar de terapia. Tu só precisas de mais um copo.','They\'ll need therapy. You just need another drink.'),'w.rep':B('Relatório de tester','Tester report'),'w.restart':B('Recomeçar','Restart'),
+ 'r.tag':B('Relatório de tester','Tester report'),'r.h':B('Obrigado. A app melhorou 0%.','Thanks. The app improved 0%.'),
+ 'r.rigor':B('Rigor','Rigor'),'r.pac':B('Paciência com devs','Patience with devs'),'r.bugs':B('Bugs encontrados','Bugs found'),'r.acc':B('Concordância com eles','Agreement with them'),'r.rec':B('Recomenda a amigas','Recommends to friends'),'r.recv':B('obviamente','obviously'),
+ 'r.foot':B('Certificado sem valor legal. O engate, se houver, acontece fora do ecrã.','Certificate with no legal value. Flirting, if any, happens off-screen.'),'r.btn':B('Recomeçar para a próxima tester','Restart for the next tester'),
+ 'g.tag':B('Jogo · 2 a 4 pessoas','Game · 2 to 4 people'),'g.h':B('Corrida à Bicicleta.','Race for the Bike.'),
+ 'g.p':B('Perguntas inusitadas, pequenos desafios, um telemóvel. Quem ganha leva a bicicleta. Quem perde cumpre castigo.','Odd questions, small challenges, one phone. Winner takes the bike. Loser does a forfeit.'),
+ 'g.addm':B('+ Ele','+ Him'),'g.addf':B('+ Ela','+ Her'),'g.start':B('Começar','Start'),
+ 'pr.tag':B('Formação de pares','Pair matching'),'prs.tag':B('Pares formados','Pairs formed'),'prs.h':B('O algoritmo decidiu. Sem recurso.','The algorithm has decided. No appeal.'),
+ 'prs.p':B('Pares com mais respostas iguais. A ciência é assim.','Pairs with the most matching answers. That\'s science.'),'prs.btn':B('Pares, aos vossos lugares','Pairs, take your places'),
+ 'sc.next':B('Próxima ronda','Next round'),
+ 'rf.tag':B('Ronda · Reflexos','Round · Reflexes'),'rf.h':B('Toca no círculo. Espera. Quando ficar verde, toca outra vez.','Tap the circle. Wait. When it turns green, tap again.'),
+ 'ch.tag':B('Ronda · Desafio','Round · Challenge'),'ch.reveal':B('Mostrar desafio (3 s)','Show challenge (3 s)'),'ch.start':B('Começar 20 s','Start 20 s'),'ch.ok':B('Conseguiram','Nailed it'),'ch.fail':B('Falharam','Failed'),
+ 'd.tag':B('Ronda · Parvoíces','Round · Silly stuff'),'d.start':B('Começar 10 s','Start 10 s'),'d.ok':B('Conseguiu','Did it'),'d.fail':B('Falhou','Failed'),'d.hint':B('Os outros julgam. Vale 1 ponto. Não vale a pena discutir.','The others judge. Worth 1 point. Not worth arguing.'),
+ 'f.prize2':B('Outro prémio','Another prize'),
+ 'f.tag':B('Resultado final','Final result'),'f.again':B('Outro castigo','Another forfeit'),'f.rematch':B('Revanche','Rematch'),'f.home':B('Voltar ao início','Back to start'),
+};
+function applyI(){$$('[data-i]').forEach(e=>{const v=I[e.dataset.i];if(v)e.textContent=L(v)});$('#lang-pt').classList.toggle('on',lang==='pt');$('#lang-en').classList.toggle('on',lang==='en');
+  if(!$('#scan-title').textContent||scanDefault)$('#scan-title').textContent=L(TX.scanTitle);if($('#status').textContent===''||statusDefault)$('#status').textContent=L(TX.wait);renderChips()}
+$('#lang-pt').onclick=()=>{lang='pt';applyI()};$('#lang-en').onclick=()=>{lang='en';applyI()};
+$('#th-neon').onclick=()=>{document.body.classList.remove('pop');$('#th-neon').classList.add('on');$('#th-pop').classList.remove('on')};
+$('#th-pop').onclick=()=>{document.body.classList.add('pop');$('#th-pop').classList.add('on');$('#th-neon').classList.remove('on')};
+let scanDefault=true,statusDefault=true;
+
+const TX={
+ scanTitle:B('Põe o dedo aqui e segura.','Put your finger here and hold.'),wait:B('A aguardar dedo humano…','Waiting for a human finger…'),
+ steps:[B('A ler impressão digital…','Reading fingerprint…'),B('A consultar 3 imperiais…','Consulting 3 beers…'),B('A ignorar o algoritmo…','Ignoring the algorithm…'),B('A perguntar ao segurança…','Asking the bouncer…'),B('Quase. Não largues.','Almost. Don\'t let go.')],
+ early:[B('Largaste? A ciência exige 2 segundos.','Let go? Science demands 2 seconds.'),B('Dedo em fuga. Tenta outra vez.','Finger on the run. Try again.'),B('Isso foi um toque, não um compromisso.','That was a tap, not a commitment.')],
+ they:B('Eles respondem','They answer'),she:B('Agora ela responde','Now she answers'),
+ hintThey:B('Sem consultar a tester. Ela vai julgar a seguir.','Don\'t consult the tester. She judges next.'),hintShe:B('Eles já responderam. Sê honesta, é para a ciência.','They already answered. Be honest, it\'s for science.'),
+ qn:B('Pergunta','Question'),of:B('de','of'),
+ acc:[B('0 em 3. A versão dela é a oficial a partir de agora.','0 of 3. Her version is official from now on.'),B('1 em 3. Eles têm uma imagem de si próprios muito otimista.','1 of 3. They have a very optimistic self-image.'),B('2 em 3. Ela viu-os melhor do que eles se veem.','2 of 3. She sees them better than they see themselves.'),B('Concordância total. Suspeito. Ela conhece-os demasiado bem.','Total agreement. Suspicious. She knows them too well.')],
+ has:B('tem','has'),
+ ctitles:[B('Erro 404: piada não encontrada.','Error 404: joke not found.'),B('Ela tem razão. Como sempre.','She\'s right. As always.'),B('Falha técnica: humor não encontrado.','Technical failure: humor not found.'),B('0 pontos para nós.','0 points for us.'),B('A app pede desculpa. Os rapazes vão pedir mais.','The app apologizes. The guys will apologize more.'),B('Isto foi ideia de um deles.','This was one of their ideas.')],
+ cwho:[B('Castigo LEVE para um deles (ela escolhe qual)','LIGHT forfeit for one of them (she picks)'),B('Castigo MÉDIO para um deles (ela escolhe qual)','MEDIUM forfeit for one of them (she picks)'),B('Castigo ÉPICO para os dois','EPIC forfeit for both')],
+ cmeta:[B('Nível 1. Ainda estás a ser simpática connosco.','Level 1. You\'re still being nice to us.'),B('Nível 2 desbloqueado. A app já percebeu que perdeu.','Level 2 unlocked. The app knows it lost.'),B('Nível 3. Isto já não é sobre piada, é sobre sobrevivência deles.','Level 3. This is no longer about jokes, it\'s about their survival.'),B('Os criadores estão sem ideias e tu continuas a ganhar.','The creators are out of ideas and you keep winning.')],
+ him:B('Ele','Him'),her:B('Ela','Her'),
+ modes:{duel:B('Modo: Duelo','Mode: Duel'),duelp:B('Um contra um. Quem ganha leva a bicicleta. Quem perde empurra-a.','One on one. Winner takes the bike. Loser pushes it.'),
+  dispute:B('Modo: Disputa','Mode: Dispute'),disputep:B('{n} competem. {j} é o júri e vem de brinde com a bicicleta.','{n} compete. {j} is the judge and comes free with the bike.'),
+  pairs:B('Modo: Pares','Mode: Pairs'),pairsp:B('O algoritmo forma 2 pares por respostas inusitadas. Depois par contra par. Prémio: bicicleta tandem.','The algorithm forms 2 pairs from odd answers. Then pair vs pair. Prize: tandem bike.'),
+  team:B('Modo: Equipas','Mode: Teams'),teamp:B('Equipas por sorteio. Prémio: uma bicicleta para partilhar.','Teams by draw. Prize: one bike to share.'),
+  need:B('Adiciona pelo menos 2 pessoas.','Add at least 2 people.')},
+ prWho:B('{p} responde','{p} answers'),prHint:B('Os outros olham para o tecto. A sério.','Everyone else looks at the ceiling. Seriously.'),
+ pairName:B('{a} + {b}','{a} + {b}'),match:B('{n} respostas iguais','{n} matching answers'),
+ round:B('Ronda','Round'),tie:B('Empate. Ninguém tem reflexos.','Tie. Nobody has reflexes.'),wins:B('{t} leva a ronda.','{t} takes the round.'),
+ best:B('Melhor tempo: {ms} ms','Best time: {ms} ms'),
+ rfTurn:B('{p}, é a tua vez','{p}, your turn'),arm:B('Toca para armar','Tap to arm'),waitp:B('Espera…','Wait…'),now:B('AGORA','NOW'),done:B('Feito','Done'),
+ false_:B('Falso arranque. {p} conta 999 ms. Clássico.','False start. {p} counts 999 ms. Classic.'),
+ rfc:[B('Suspeito. Já bebeste?','Suspicious. Have you been drinking?'),B('Aceitável para esta hora.','Acceptable for this hour.'),B('A imperial já chegou aos dedos.','The beer has reached the fingers.')],
+ secret:B('{p} responde em segredo','{p} answers in secret'),guessw:B('{p} adivinha','{p} guesses'),guessh:B('O que é que {p} respondeu?','What did {p} answer?'),
+ hit:B('{t} acertou.','{t} got it.'),miss:B('{t} falhou.','{t} missed.'),secretWas:B('Resposta secreta: {a}.','Secret answer: {a}.'),
+ hitc:B('Assustadoramente compatíveis.','Frighteningly compatible.'),missc:B('Ainda há muito para conhecer.','Still a lot to learn.'),
+ chWho:B('{t} faz o desafio · {j} julga','{t} does the challenge · {j} judges'),chTitle:B('Só quem faz o desafio pode ver. Os outros olham para o tecto.','Only the performer may look. Everyone else, ceiling.'),
+ chGo:B('Vai. Sem falar quando for mímica.','Go. No talking if it\'s a mime.'),chTime:B('Tempo. Júri, decidam.','Time. Judges, decide.'),chHint:B('O júri é incorruptível. Em teoria.','The jury is incorruptible. In theory.'),
+ chOk:B('{t} conseguiram o desafio.','{t} nailed the challenge.'),chFail:B('{t} falharam o desafio.','{t} failed the challenge.'),chWas:B('O desafio era: {w}','The challenge was: {w}'),
+ fWin:B('{t} ganha a bicicleta. 🚲','{t} wins the bike. 🚲'),fTie:B('Empate. A bicicleta fica no Lux.','Tie. The bike stays at Lux.'),
+ fPrize:[B('Uma bicicleta. Sem travões. Como esta noite.','A bike. No brakes. Like tonight.'),B('Bicicleta tandem. Quem vai à frente decide-se no táxi.','Tandem bike. Who rides in front gets decided in the taxi.'),B('Bicicleta imaginária, mas o orgulho é real.','Imaginary bike, but the pride is real.'),B('A bicicleta será entregue às 6h, à porta do Lux. Provavelmente não.','The bike will be delivered at 6am at the Lux door. Probably not.'),
+  B('Uma bicicleta e um pastel de nata amassado no bolso.','A bike and a squashed pastel de nata in a pocket.'),B('Bicicleta com cesto para os arrependimentos da noite.','A bike with a basket for tonight\'s regrets.'),B('Bicicleta e o título honorário de Pessoa Menos Confusa do Lux.','A bike and the honorary title of Least Confused Person at Lux.'),
+  B('Bicicleta com campainha. A campainha é o perdedor a dizer "trim".','A bike with a bell. The bell is the loser saying "ring".'),B('Uma bicicleta e o direito de escolher a próxima música, que ninguém vai ouvir.','A bike and the right to pick the next song, which nobody will hear.'),B('Bicicleta e um copo de água real. O mais valioso dos dois.','A bike and a real glass of water. The more valuable of the two.'),
+  B('Bicicleta e a primeira ronda paga pelos perdedores. Moralmente.','A bike and the first round on the losers. Morally.'),B('Bicicleta elétrica. A bateria é a energia do perdedor.','An e-bike. The battery is the loser\'s energy.')],
+ mini:[B('um high-five sem contacto','a contactless high-five'),B('um "boa" dito com convicção','a "nice" said with conviction'),B('5 segundos de aplausos dos perdedores','5 seconds of applause from the losers'),B('o direito de escolher quem faz a próxima parvoíce','the right to pick who does the next silly task'),B('um elogio inventado na hora','an on-the-spot invented compliment'),B('uma vénia lenta dos adversários','a slow bow from the opponents'),B('um brinde com o que houver','a toast with whatever is at hand'),B('o lugar de honra no táxi (à frente)','the seat of honor in the taxi (front)'),B('uma dedicatória imaginária do DJ','an imaginary DJ shout-out'),B('nada. O prémio é a jornada.','nothing. The prize is the journey.')],
+ fJudge:B('{j} vem de brinde. Termos e condições no bar.','{j} comes free. Terms and conditions at the bar.'),
+ fCwho:B('Castigo para {t}','Forfeit for {t}'),fCwhoTie:B('Castigo para todos, nível leve','Forfeit for everyone, light level'),
+ fNote:B('Regra da casa: quem perdeu pode carregar em "Outro castigo" até aparecer um que os outros mereçam.','House rule: losers may tap "Another forfeit" until one the others deserve shows up.'),
+ fNoteM:B('Sem recurso. O júri já foi para o bar.','No appeal. The jury already went to the bar.'),
+ duoTie:B('Desempate: quem chegar primeiro ao bar.','Tiebreak: first to reach the bar.'),
+ miniPrize:B('Prémio da ronda','Round prize'),dareTurn:B('{p}, parvoíce para ti','{p}, silly task for you'),dOk:B('{p} conseguiu. Ponto para {t}.','{p} did it. Point for {t}.'),dFail:B('{p} falhou. Com dignidade.','{p} failed. With dignity.'),
+ dSub:B('10 segundos. Sem ensaio.','10 seconds. No rehearsal.'),
+};
+
+/* ---------- icons ---------- */
+const ic={
+ pato:`<svg viewBox="0 0 100 100"><ellipse cx="50" cy="66" rx="30" ry="22" fill="#FFC63A"/><circle cx="62" cy="38" r="18" fill="#FFC63A"/><path d="M76 40l16 4-16 6z" fill="#FF7A3A"/><circle cx="66" cy="34" r="3.5" fill="#0B0A16"/></svg>`,
+ gato:`<svg viewBox="0 0 100 100"><path d="M26 40l4-20 16 12h8l16-12 4 20" fill="#A9A4C7"/><ellipse cx="50" cy="58" rx="28" ry="24" fill="#A9A4C7"/><path d="M36 54h12M52 54h12" stroke="#0B0A16" stroke-width="4" stroke-linecap="round"/><path d="M42 74q8 3 16 0" stroke="#0B0A16" stroke-width="2.5" fill="none"/></svg>`,
+ robot:`<svg viewBox="0 0 100 100"><rect x="24" y="28" width="52" height="46" rx="10" fill="#5EE3FF"/><rect x="34" y="40" width="10" height="8" rx="2" fill="#0B0A16"/><rect x="56" y="42" width="10" height="4" rx="2" fill="#0B0A16"/><path d="M38 62q12-6 24 0" stroke="#0B0A16" stroke-width="3" fill="none"/><rect x="30" y="80" width="40" height="10" rx="3" fill="#2A2745" stroke="#C9FF3A" stroke-width="2"/><rect x="32" y="82" width="6" height="6" fill="#C9FF3A"/></svg>`,
+ imperial:`<svg viewBox="0 0 100 100"><rect x="34" y="30" width="32" height="50" rx="4" fill="#FFC63A"/><rect x="34" y="24" width="32" height="12" rx="4" fill="#FFF4DC"/><path d="M66 40h10v22h-10" stroke="#FFC63A" stroke-width="6" fill="none"/></svg>`,
+ phones:`<svg viewBox="0 0 100 100"><path d="M24 60q0-30 26-30t26 30" stroke="#FF4FA3" stroke-width="8" fill="none"/><rect x="18" y="56" width="12" height="20" rx="5" fill="#FF4FA3"/><rect x="70" y="56" width="12" height="20" rx="5" fill="#FF4FA3"/></svg>`,
+ pastel:`<svg viewBox="0 0 100 100"><path d="M18 50q32-18 64 0v20q-32 16-64 0z" fill="#FFC63A"/><path d="M18 50q32-18 64 0" stroke="#E08A2A" stroke-width="6" fill="none"/><ellipse cx="50" cy="48" rx="24" ry="9" fill="#F6C34C"/><ellipse cx="44" cy="46" rx="6" ry="3" fill="#7A3E12"/></svg>`,
+ dj:`<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="28" fill="#0B0A16" stroke="#A9A4C7" stroke-width="4"/><circle cx="50" cy="50" r="8" fill="#FF4FA3"/><path d="M50 22a28 28 0 0 1 28 28" stroke="#C9FF3A" stroke-width="4" fill="none"/></svg>`,
+ saida:`<svg viewBox="0 0 100 100"><rect x="20" y="30" width="60" height="40" rx="8" fill="#C9FF3A"/><path d="M34 50h26M52 40l10 10-10 10" stroke="#0B0A16" stroke-width="6" fill="none" stroke-linecap="round"/></svg>`,
+ energia:`<svg viewBox="0 0 100 100"><path d="M56 14L30 56h18l-6 30 30-46H54z" fill="#FFC63A" stroke="#E08A2A" stroke-width="3"/></svg>`,
+};
+
+/* ---------- navigation ---------- */
+let state;
+function reset(){state={eles:[],ela:[],turn:'eles',q:0,bugs:0,level:0,usedC:[]};scanCb=null;scanDefault=true;$('#scan-title').textContent=L(TX.scanTitle)}
+function go(id){$$('.screen').forEach(s=>s.classList.remove('on'));$('#'+id).classList.add('on');window.scrollTo(0,0);
+  if(id==='s-scan')resetScan();if(id==='s-report')report();if(id==='s-q')renderQ();if(id==='s-beta')reset();if(id==='s-setup')setupRender()}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b){buzz(20);go(b.dataset.go)}});
+
+/* ---------- tester mode ---------- */
+const Q=[
+ {t:B('Se eles fossem um animal no Lux às 5h da manhã?','If they were an animal at Lux at 5am?'),o:[['pato',B('Pato perdido','Lost duck')],['gato',B('Gato desconfiado','Suspicious cat')],['robot',B('Robot com 12% de bateria','Robot at 12% battery')]]},
+ {t:B('O que trazem sempre na mão?','What\'s always in their hand?'),o:[['imperial',B('Imperial morna','Warm beer')],['phones',B('Auscultadores nunca ligados','Headphones never plugged in')],['pastel',B('Pastel de nata de emergência','Emergency pastel de nata')]]},
+ {t:B('Estado atual?','Current state?'),o:[['dj',B('A fingir que conhecem o DJ','Pretending to know the DJ')],['saida',B('À procura da saída','Looking for the exit')],['energia',B('Energia para mais 6 horas (mentira)','Energy for 6 more hours (a lie)')]]},
+];
+const NAMES={pato:B('Pato','Duck'),gato:B('Gato','Cat'),robot:B('Robot','Robot'),imperial:B('com imperial morna','with warm beer'),phones:B('de auscultadores desligados','with unplugged headphones'),pastel:B('com pastel de nata','with a pastel de nata'),dj:B('que finge conhecer o DJ','who pretends to know the DJ'),saida:B('à procura da saída','looking for the exit'),energia:B('com energia falsa','with fake energy')};
+function renderQ(){const q=Q[state.q],ela=state.turn==='ela';$('#qtag').textContent=`${L(TX.qn)} ${state.q+1} ${L(TX.of)} 3`;
+  const w=$('#qwho');w.textContent=L(ela?TX.she:TX.they);w.className='who '+(ela?'f':'m');$('#qtext').textContent=L(q.t);$('#qhint').textContent=L(ela?TX.hintShe:TX.hintThey);
+  const o=$('#opts');o.innerHTML='';q.o.forEach(([k,l])=>{const b=document.createElement('button');b.className='opt';b.innerHTML=ic[k]+`<span>${L(l)}</span>`;
+    b.onclick=()=>{buzz(25);state[state.turn].push(k);state.q++;if(state.q<3)renderQ();else if(!ela){state.turn='ela';state.q=0;renderQ()}else avatar()};o.appendChild(b)})}
+const strip=s=>s.replace(/<\/?svg[^>]*>/g,'');
+function draw(a){return `<svg viewBox="0 0 100 130"><g>${strip(ic[a[0]])}</g><g transform="translate(58,60) scale(.45)">${strip(ic[a[1]])}</g><g transform="translate(2,88) scale(.4)">${strip(ic[a[2]])}</g></svg>`}
+function avatar(){const acc=state.eles.filter((v,i)=>v===state.ela[i]).length;state.acc=Math.round(acc/3*100);
+  $('#av-eles').innerHTML=draw(state.eles);$('#av-ela').innerHTML=draw(state.ela);
+  $('#avname').textContent=`${L(NAMES[state.ela[0]])} ${L(NAMES[state.ela[1]])} ${L(NAMES[state.ela[2]])}.`;$('#avmsg').textContent=L(TX.acc[acc]);buzz([40,30,60]);go('s-avatar')}
+
+/* scanner */
+let scanT=null,prog=0,scanCb=null;const pad=$('#pad'),ring=pad.querySelector('.ring'),status=$('#status');
+function resetScan(){clearInterval(scanT);scanT=null;prog=0;ring.style.setProperty('--cut','100%');pad.classList.remove('hot');status.textContent=L(TX.wait);statusDefault=true}
+pad.addEventListener('pointerdown',e=>{e.preventDefault();if(scanT)return;pad.classList.add('hot');buzz(15);prog=0;statusDefault=false;
+  scanT=setInterval(()=>{prog+=2;ring.style.setProperty('--cut',(100-prog)+'%');status.textContent=L(TX.steps[Math.min(4,Math.floor(prog/22))]);if(prog%25===0)buzz(10);
+    if(prog>=100){clearInterval(scanT);scanT=null;buzz([60,40,120]);confetti();pad.classList.remove('hot');if(scanCb){const c=scanCb;scanCb=null;c()}else verdict()}},40)});
+['pointerup','pointercancel','pointerleave'].forEach(ev=>pad.addEventListener(ev,()=>{if(!scanT)return;clearInterval(scanT);scanT=null;pad.classList.remove('hot');ring.style.setProperty('--cut','100%');status.textContent=L(rnd(TX.early));buzz([30,40,30])}));
+
+const V=[
+ B('de probabilidade de dançar a mesma música que tu esta noite. Provavelmente por acidente.','chance of dancing to the same song as you tonight. Probably by accident.'),
+ B('de hipótese de contar uma história de trabalho. Sugerimos fuga ao primeiro "no meu projeto".','chance of telling a work story. We suggest fleeing at the first "in my project".'),
+ B('de risco de dizer "não costumo vir cá" pela terceira vez esta semana.','risk of saying "I don\'t usually come here" for the third time this week.'),
+ B('de match, segundo um algoritmo treinado numa mesa do Bairro Alto.','match, according to an algorithm trained at a Bairro Alto table.'),
+ B('de probabilidade de a próxima ronda ser paga por ele. A app não é responsável.','chance the next round is on him. The app is not liable.'),
+ B('de chance de ainda estar cá às 6 da manhã. Ele diz que não. O Lux diz que sim.','chance of still being here at 6am. He says no. Lux says yes.'),
+ B('de compatibilidade astral. O signo dele é "atrasado".','astral compatibility. His sign is "late".'),
+ B('de probabilidade de pedir o Instagram e depois não seguir. Clássico.','chance of asking for Instagram and then not following. Classic.'),
+];
+function verdict(){const p=Math.floor(31+Math.random()*66);$('#pct').textContent=p+'%';const n=state.ela.length?L(NAMES[state.ela[0]])+' '+L(NAMES[state.ela[1]]):L(TX.him);
+  $('#vtext').innerHTML=`<b style="color:var(--a)">${n}</b> ${L(TX.has)} ${p}% ${L(rnd(V))}`;go('s-verdict')}
+
+/* forfeits */
+const C={
+ 1:[[B('Dançar 10 segundos como um pato.','Dance like a duck for 10 seconds.'),B('O outro conta em voz alta.','The other one counts out loud.')],[B('Dizer uma frase inteira em francês inventado.','Say a full sentence in made-up French.'),B('Com sotaque. Sem rir.','With accent. No laughing.')],[B('Dar um elogio sincero ao segurança.','Give the bouncer a sincere compliment.'),B('E voltar com prova testemunhal.','And come back with a witness.')],[B('Ir ao bar e voltar em bicos de pés.','Go to the bar and back on tiptoes.'),B('Sem derramar nada.','Without spilling.')],[B('Apresentar-se ao amigo como se não se conhecessem há 10 anos.','Introduce yourself to your friend as if you haven\'t met in 10 years.'),B('Aperto de mão obrigatório.','Handshake mandatory.')]],
+ 2:[[B('Narrar os próximos 30 segundos como documentário da National Geographic.','Narrate the next 30 seconds like a National Geographic documentary.'),B('Voz grave. "E aqui vemos o macho, perdido."','Deep voice. "And here we see the male, lost."')],[B('Só pode responder "obviamente" a tudo até ao próximo scan.','May only answer "obviously" to everything until the next scan.'),B('A tester faz as perguntas.','The tester asks the questions.')],[B('Fazer a pose de foto de perfil dela, em loop, 15 segundos.','Do her profile-photo pose, on loop, 15 seconds.'),B('Ela escolhe a pose. Sem recurso.','She picks the pose. No appeal.')],[B('Inventar um nome de DJ e apresentar-se assim a quem passar.','Invent a DJ name and introduce yourself with it to passers-by.'),B('Mínimo 2 pessoas.','Minimum 2 people.')],[B('Descrever o próprio look como crítico de moda francês.','Describe your own look as a French fashion critic.'),B('Termina com "non".','End with "non".')]],
+ 3:[[B('Os DOIS fazem uma coreografia sincronizada de 20 segundos, inventada agora.','BOTH do a synchronized 20-second choreography, invented now.'),B('A tester avalia de 1 a 10.','The tester rates 1 to 10.')],[B('Discurso de agradecimento tipo Óscares por terem sido chumbados.','Oscars-style thank-you speech for being rejected.'),B('Agradecer à mãe é obrigatório.','Thanking mom is mandatory.')],[B('Hino do castigo, a capella, 15 segundos, os dois.','Forfeit anthem, a cappella, 15 seconds, both.'),B('O refrão tem de rimar com "Lux".','The chorus must rhyme with "Lux".')],[B('Robot com bateria fraca a andar até ao bar e voltar. Os dois.','Low-battery robot walk to the bar and back. Both.'),B('Se um cair, recomeça.','If one falls, restart.')]],
+};
+function castigo(){state.bugs++;state.level=Math.min(3,state.level+1);const lv=state.level;const pool=C[lv].filter(c=>!state.usedC.includes(c));const pick=rnd(pool.length?pool:C[lv]);state.usedC.push(pick);
+  $('#ctitle').textContent=L(rnd(TX.ctitles));$('#cwho').textContent=L(TX.cwho[lv-1]);$('#ctext').innerHTML=`<b>${L(pick[0])}</b><br><span class="small">${L(pick[1])}</span>`;
+  $('#cmeta').textContent=L(state.bugs>3?TX.cmeta[3]:TX.cmeta[lv-1]);$$('.lvl i').forEach((i,k)=>i.classList.toggle('on',k<lv));buzz([40,30,40,30,80]);go('s-castigo')}
+$('#chumbar').onclick=castigo;$('#chumbar2').onclick=castigo;
+function report(){$('#r-bugs').textContent=state.bugs;$('#r-acc').textContent=(state.acc||0)+'%';$('#r-pac').textContent=Math.max(2,12-state.bugs*3)+'%'}
+
+/* ================= GAME: RACE FOR THE BIKE ================= */
+let G;
+function gReset(){G={players:[],teams:[],judge:null,mode:null,score:[],round:0,ri:0,rf:{i:0,list:[],armed:null,t0:0,timer:null,times:{}},gs:{i:0,secret:null},ch:{i:0,timer:null,left:20},pr:{i:0,ans:[]}}}
+gReset();
+const pname=p=>`${L(p.g==='m'?TX.him:TX.her)} ${p.n}`;
+const tname=t=>t.map(i=>pname(G.players[i])).join(' + ');
+function renderChips(){const c=$('#chips');if(!c)return;c.innerHTML='';G.players.forEach((p,i)=>{const d=document.createElement('div');d.className='chip '+p.g;d.innerHTML=`${pname(p)} <button data-rm="${i}">✕</button>`;c.appendChild(d)});
+  $$('[data-rm]').forEach(b=>b.onclick=()=>{G.players.splice(+b.dataset.rm,1);renum();setupRender()})}
+function renum(){let m=0,f=0;G.players.forEach(p=>p.n=p.g==='m'?++m:++f)}
+function addP(g){if(G.players.length>=4)return;G.players.push({g,n:0});renum();buzz(20);setupRender()}
+$('#add-m').onclick=()=>addP('m');$('#add-f').onclick=()=>addP('f');
+function decideMode(){const P=G.players,m=P.filter(p=>p.g==='m').length,f=P.filter(p=>p.g==='f').length,n=P.length;
+  if(n<2)return null;if(n===2)return 'duel';
+  if((m===1&&f>=2)||(f===1&&m>=2))return 'dispute';
+  if(m===2&&f===2)return 'pairs';return 'team'}
+function setupRender(){renderChips();const mode=decideMode();const P=G.players;$('#add-m').disabled=$('#add-f').disabled=P.length>=4;$('#g-start').disabled=!mode;
+  if(!mode){$('#g-mode').textContent='';$('#g-modep').textContent=L(TX.modes.need);return}
+  $('#g-mode').textContent=L(TX.modes[mode]);let p=L(TX.modes[mode+'p']);
+  if(mode==='dispute'){const jg=P.find(x=>P.filter(y=>y.g===x.g).length===1);p=p.replace('{n}',P.filter(x=>x!==jg).map(pname).join(', ')).replace('{j}',pname(jg))}
+  $('#g-modep').textContent=p}
+$('#g-start').onclick=()=>{const mode=decideMode();if(!mode)return;G.mode=mode;const P=G.players;G.judge=null;buzz(30);
+  if(mode==='duel'){G.teams=[[0],[1]]}
+  else if(mode==='dispute'){const j=P.findIndex(x=>P.filter(y=>y.g===x.g).length===1);G.judge=j;G.teams=P.map((_,i)=>i).filter(i=>i!==j).map(i=>[i])}
+  else if(mode==='team'){const idx=P.map((_,i)=>i).sort(()=>Math.random()-.5);G.teams=[idx.slice(0,2),idx.slice(2)]}
+  if(mode==='pairs'){G.pr={i:0,ans:[]};pairQ();return}
+  G.score=G.teams.map(()=>0);gameStart()};
+
+/* pairs phase: unusual questions */
+const PQ=[
+ {t:B('Última coisa que googlaste às 3h da manhã?','Last thing you googled at 3am?'),o:[B('Se os pombos dormem','Whether pigeons sleep'),B('Sintomas de coisas que não tenho','Symptoms of things I don\'t have'),B('Ex de alguém','Someone\'s ex')]},
+ {t:B('Superpoder inútil que aceitavas?','Useless superpower you\'d accept?'),o:[B('Falar com lagartixas','Talk to geckos'),B('Saber sempre onde está o isqueiro','Always know where the lighter is'),B('Apanhar sempre o táxi vazio','Always catch the empty taxi')]},
+ {t:B('Se o Lux fechasse agora, para onde?','If Lux closed right now, where to?'),o:[B('Bifana no Cais','Bifana at Cais'),B('Miradouro a fingir que é poético','Viewpoint pretending it\'s poetic'),B('Cama. Sinceramente.','Bed. Honestly.')]},
+];
+function pairQ(){const pr=G.pr;const total=G.players.length*PQ.length;if(pr.i>=total)return pairsForm();const pi=pr.i%G.players.length,qi=Math.floor(pr.i/G.players.length),q=PQ[qi],p=G.players[pi];
+  const w=$('#pr-who');w.textContent=L(TX.prWho).replace('{p}',pname(p));w.className='who '+p.g;$('#pr-q').textContent=L(q.t);$('#pr-hint').textContent=L(TX.prHint);
+  const o=$('#pr-opts');o.innerHTML='';q.o.forEach((l,k)=>{const b=document.createElement('button');b.className='opt';b.innerHTML=`<span>${L(l)}</span>`;b.onclick=()=>{buzz(25);(pr.ans[pi]=pr.ans[pi]||[])[qi]=k;pr.i++;pairQ()};o.appendChild(b)});go('s-pair')}
+function pairsForm(){const P=G.players,ms=P.map((p,i)=>i).filter(i=>P[i].g==='m'),fs=P.map((p,i)=>i).filter(i=>P[i].g==='f');const A=G.pr.ans;
+  const sim=(a,b)=>A[a].filter((v,k)=>v===A[b][k]).length;
+  const o1=sim(ms[0],fs[0])+sim(ms[1],fs[1]),o2=sim(ms[0],fs[1])+sim(ms[1],fs[0]);
+  G.teams=o1>=o2?[[ms[0],fs[0]],[ms[1],fs[1]]]:[[ms[0],fs[1]],[ms[1],fs[0]]];
+  const list=$('#pairs-list');list.innerHTML='';G.teams.forEach(t=>{const d=document.createElement('div');d.className='row';d.innerHTML=`<span class="t">${tname(t)}</span><span class="n" style="font-size:22px">${L(TX.match).replace('{n}',sim(t[0],t[1]))}</span>`;list.appendChild(d)});
+  G.score=[0,0];G.round=0;confetti();buzz([50,30,50]);go('s-pairs')}
+$('#prs-go').onclick=()=>{buzz(20);gameStart()};
+
+/* scoreboard */
+function showScore(title,text,next){const l=$('#sc-list');l.innerHTML='';const mx=Math.max(...G.score);
+  G.teams.forEach((t,i)=>{const d=document.createElement('div');d.className='row'+(G.score[i]===mx&&mx>0?' lead':'');d.innerHTML=`<span class="t">${tname(t)}</span><span class="n">${G.score[i]}</span>`;l.appendChild(d)});
+  $('#sc-tag').textContent=`${L(TX.round)} ${G.round}/${ROUNDS.length}`;$('#sc-prize').textContent=L(TX.miniPrize)+': '+L(rnd(TX.mini));$('#sc-title').textContent=title;$('#sc-text').innerHTML=text;$('#sc-next').onclick=next;go('s-score')}
+function winnerText(win){return win===null?L(TX.tie):L(TX.wins).replace('{t}',tname(G.teams[win]))}
+
+/* round 1: reflex */
+const rfpad=$('#rfpad'),rfs=$('#rf-status');
+function reflexStart(){const r=G.rf;r.list=G.teams.flatMap((t,ti)=>t.map(pi=>[ti,pi]));r.i=0;r.times=G.teams.map(()=>[]);reflexPlayer()}
+function reflexPlayer(){const r=G.rf;if(r.i>=r.list.length)return reflexEnd();const [ti,pi]=r.list[r.i],p=G.players[pi];
+  const w=$('#rf-who');w.textContent=L(TX.rfTurn).replace('{p}',pname(p));w.className='who '+p.g;$('#rf-res').textContent='';rfpad.className='pad';rfs.textContent=L(TX.arm);r.armed=null;go('s-reflex')}
+rfpad.addEventListener('pointerdown',e=>{e.preventDefault();if(!$('#s-reflex').classList.contains('on'))return;const r=G.rf;if(r.armed==='done')return;
+  if(r.armed===null){r.armed=false;rfpad.classList.add('hot');rfs.textContent=L(TX.waitp);buzz(15);r.timer=setTimeout(()=>{r.armed=true;rfpad.classList.remove('hot');rfpad.classList.add('go');rfs.textContent=L(TX.now);r.t0=performance.now();buzz(80)},1200+Math.random()*2500);return}
+  const [ti,pi]=r.list[r.i],p=G.players[pi];let ms;
+  if(r.armed===false){clearTimeout(r.timer);ms=999;$('#rf-res').innerHTML=`<b style="color:var(--a)">${L(TX.false_).replace('{p}',pname(p))}</b>`;buzz([30,30,30])}
+  else{ms=Math.round(performance.now()-r.t0);$('#rf-res').innerHTML=`<b style="color:var(--b)">${ms} ms.</b> ${L(TX.rfc[ms<220?0:ms<350?1:2])}`;buzz(40)}
+  r.times[ti].push(ms);r.armed='done';rfpad.className='pad';rfs.textContent=L(TX.done);r.i++;setTimeout(reflexPlayer,1500)});
+function reflexEnd(){const best=G.rf.times.map(a=>Math.min(...a));const mn=Math.min(...best);const ws=best.map((b,i)=>b===mn?i:-1).filter(i=>i>=0);const win=ws.length===1?ws[0]:null;if(win!==null)G.score[win]++;
+  showScore(winnerText(win),G.teams.map((t,i)=>`${tname(t)}: <b>${best[i]} ms</b>`).join('<br>'),()=>nextRound())}
+
+/* round 2: guess (odd questions) */
+const GQ=[
+ {q:B('Que música vos faz ir para a pista sem vergonha?','What song gets you on the floor with zero shame?'),o:[B('Reggaeton de 2014','2014 reggaeton'),B('Techno a 140 bpm','140 bpm techno'),B('Remix do Tony Carreira','A Tony Carreira remix')]},
+ {q:B('A que horas sais do Lux esta noite, honestamente?','What time are you leaving Lux tonight, honestly?'),o:[B('Às 3h, como pessoa responsável','3am, like a responsible person'),B('Às 6h, com o sol','6am, with the sun'),B('Com o pessoal da limpeza','With the cleaning crew')]},
+ {q:B('Pior frase de engate que já ouviste aqui?','Worst pickup line you\'ve heard here?'),o:[B('"Não costumo vir cá"','"I don\'t usually come here"'),B('"Conheço o DJ"','"I know the DJ"'),B('"Tens lume? Não fumo, mas tens?"','"Got a light? I don\'t smoke, but do you?"')]},
+ {q:B('O que fazes quando toca uma música que odeias?','What do you do when a song you hate comes on?'),o:[B('Vou ao bar, estrategicamente','Go to the bar, strategically'),B('Danço na mesma, sem alma','Dance anyway, soulless'),B('Olho para o telemóvel como se fosse urgente','Stare at my phone like it\'s urgent')]},
+ {q:B('Comida às 5h da manhã?','Food at 5am?'),o:[B('Bifana','Bifana'),B('Pastel de nata de bomba de gasolina','Gas-station pastel de nata'),B('Cereais em pé na cozinha','Cereal standing in the kitchen')]},
+ {q:B('Se tivesses de tatuar uma palavra portuguesa, qual?','If you had to tattoo one Portuguese word, which?'),o:[B('Saudade, obviamente','Saudade, obviously'),B('Bifana','Bifana'),B('Desenrascanço','Desenrascanço')]},
+ {q:B('O teu talento secreto mais inútil?','Your most useless secret talent?'),o:[B('Imitar o som do metro a fechar','Imitating the metro doors closing'),B('Adivinhar o final de filmes maus','Guessing the ending of bad movies'),B('Encontrar sempre o Wi-Fi mais fraco','Always finding the weakest Wi-Fi')]},
+ {q:B('Primeira coisa que fazes ao chegar a casa às 6h?','First thing you do getting home at 6am?'),o:[B('Torradas com muita manteiga','Toast with too much butter'),B('Ver o ecrã do telemóvel a arrepender-me','Stare at the phone regretting'),B('Prometer que foi a última vez','Promise it was the last time')]},
+ {q:B('Se fosses um bairro de Lisboa?','If you were a Lisbon neighborhood?'),o:[B('Alfama, com fado a mais','Alfama, too much fado'),B('Cais do Sodré, a fingir que não','Cais do Sodré, pretending otherwise'),B('Benfica, sinceramente','Benfica, honestly')]},
+ {q:B('Qual destas mentiras já contaste esta noite?','Which of these lies have you told tonight?'),o:[B('"Só bebo mais um"','"Just one more"'),B('"Vou-me embora daqui a 10 minutos"','"Leaving in 10 minutes"'),B('"Conheço esta música"','"I know this song"')]},
+ {q:B('Dança de emergência quando ninguém está a ver?','Emergency dance when nobody is watching?'),o:[B('O robot, mal feito','The robot, badly done'),B('Só ombros','Shoulders only'),B('Apontar para o tecto com convicção','Pointing at the ceiling with conviction')]},
+ {q:B('Objeto mais estranho na tua mala ou bolso agora?','Weirdest object in your bag or pocket right now?'),o:[B('Um carregador que não carrega','A charger that doesn\'t charge'),B('Uma pulseira de um festival de 2019','A wristband from a 2019 festival'),B('Um recibo de algo de que me arrependo','A receipt for something I regret')]},
+];
+function guessStart(){G.gs={i:0,order:[],used:[]};const T=G.teams;
+  if(G.judge!==null)T.forEach((t,ti)=>{G.gs.order.push({ans:[G.judge],gs:t,team:ti});G.gs.order.push({ans:t,gs:[G.judge],team:ti})});
+  else if(T[0].length===2)T.forEach((t,ti)=>{G.gs.order.push({ans:[t[0]],gs:[t[1]],team:ti});G.gs.order.push({ans:[t[1]],gs:[t[0]],team:ti})});
+  else T.forEach((t,ti)=>G.gs.order.push({ans:T[1-ti],gs:t,team:ti}));
+  guessStep()}
+function guessStep(){const g=G.gs;if(g.i>=g.order.length)return guessEnd();const st=g.order[g.i];const pool=GQ.filter(q=>!g.used.includes(q));const q=rnd(pool.length?pool:GQ);g.used.push(q);
+  const nm=ix=>ix.map(i=>pname(G.players[i])).join(' + ');const gA=G.players[st.ans[0]].g,gG=G.players[st.gs[0]].g;
+  const render=phase=>{const w=$('#gs-who');w.textContent=phase==='secret'?L(TX.secret).replace('{p}',nm(st.ans)):L(TX.guessw).replace('{p}',nm(st.gs));w.className='who '+(phase==='secret'?gA:gG);
+    $('#gs-tag').textContent=`${L(TX.round)} 2 · ${g.i+1}/${g.order.length}`;$('#gs-q').textContent=L(q.q);$('#gs-hint').textContent=phase==='secret'?L(TX.prHint):L(TX.guessh).replace('{p}',nm(st.ans));
+    const o=$('#gs-opts');o.innerHTML='';q.o.forEach((l,k)=>{const b=document.createElement('button');b.className='opt';b.innerHTML=`<span>${L(l)}</span>`;
+      b.onclick=()=>{buzz(25);if(phase==='secret'){g.secret=k;render('guess')}else{const hit=k===g.secret;if(hit)G.score[st.team]++;g.i++;
+        showScore(L(hit?TX.hit:TX.miss).replace('{t}',tname(G.teams[st.team])),`${L(TX.secretWas).replace('{a}','<b style="color:var(--d)">'+L(q.o[g.secret])+'</b>')} ${L(hit?TX.hitc:TX.missc)}`,()=>guessStep())}};o.appendChild(b)});go('s-guess')};
+  render('secret')}
+function guessEnd(){nextRound()}
+
+/* dares: small silly tasks for anyone (benign, no contact, no drinking) */
+const DARES=[
+ B('Língua no nariz. 5 segundos de tentativa séria.','Tongue to nose. 5 seconds of serious effort.'),B('Falar 10 segundos só com palavras que começam por R.','Speak 10 seconds using only words starting with R.'),B('Olhar fixamente para quem está à frente 10 s sem rir.','Stare at the person in front for 10 s without laughing.'),
+ B('Alfabeto ao contrário até ao M.','Alphabet backwards down to M.'),B('Cara de foto de passaporte durante 10 s. Sem pestanejar.','Passport-photo face for 10 s. No blinking.'),B('Imitar um gato a pedir comida às 6h da manhã.','Impersonate a cat begging for food at 6am.'),
+ B('Contar até 10 em alemão inventado.','Count to 10 in made-up German.'),B('Dançar só com as sobrancelhas 10 s.','Dance with eyebrows only for 10 s.'),B('Estátua que se derrete lentamente.','A statue slowly melting.'),
+ B('Beber um gole do que tiveres com o mindinho no ar e cara de crítico.','Take a sip of whatever you have, pinky up, critic face.'),B('Dizer "Lux Frágil" com sotaque brasileiro, espanhol e russo.','Say "Lux Frágil" in Brazilian, Spanish and Russian accents.'),B('Aplaudir a ti próprio 10 s como o teu maior fã.','Applaud yourself for 10 s like your biggest fan.'),
+ B('Vénia lenta e solene ao segurança, à distância.','Slow, solemn bow to the bouncer, from afar.'),B('Piscar o olho ao teu reflexo no telemóvel e dizer "boa".','Wink at your reflection in the phone and say "nice".'),B('5 passos em câmara lenta, com cara de filme de ação.','5 steps in slow motion, action-movie face.'),
+ B('Voz de GPS: "recalculando" 3 vezes com emoção crescente.','GPS voice: "recalculating" 3 times with rising emotion.'),B('Cantarolar uma música de boca fechada. Os outros adivinham.','Hum a song with mouth closed. The others guess.'),B('Telemóvel como walkie-talkie: reportar a situação ao QG.','Phone as walkie-talkie: report the situation to HQ.'),
+ B('Sorriso de anúncio de pasta de dentes durante 10 s.','Toothpaste-ad smile for 10 s.'),B('Tocar no cotovelo com a língua. É impossível. Tenta na mesma.','Touch your elbow with your tongue. Impossible. Try anyway.'),B('Fingir que apanhas um táxi que não para, 10 s.','Pretend to hail a taxi that never stops, 10 s.'),
+ B('Dizer "obrigado" a um objeto por tudo o que fez por ti esta noite.','Thank an object for everything it did for you tonight.'),B('Imitar o som do metro a fechar as portas, com aviso.','Imitate the metro doors closing, with the announcement.'),B('Apresentar-te ao grupo com um nome de DJ inventado.','Introduce yourself to the group with a made-up DJ name.'),
+ B('Fazer de pombo do Rossio a decidir se rouba uma batata.','Be a Rossio pigeon deciding whether to steal a fry.'),B('Andar como se o chão fosse lava, 5 passos.','Walk as if the floor is lava, 5 steps.'),
+];
+function dareStart(){G.d={list:G.teams.flatMap((t,ti)=>t.map(pi=>[ti,pi])).sort(()=>Math.random()-.5),i:0,used:G.d?G.d.used:[],timer:null};dareStep()}
+function dareStep(){const d=G.d;if(d.i>=d.list.length)return nextRound();const [ti,pi]=d.list[d.i],p=G.players[pi];const pool=DARES.filter(x=>!d.used.includes(x));d.cur=rnd(pool.length?pool:DARES);d.used.push(d.cur);
+  const w=$('#d-who');w.textContent=L(TX.dareTurn).replace('{p}',pname(p));w.className='who '+p.g;$('#d-text').textContent=L(d.cur);$('#d-sub').textContent=L(TX.dSub);
+  $('#d-timer').textContent='10';$('#d-ctl').hidden=false;$('#d-judge').hidden=true;go('s-dare')}
+$('#d-start').onclick=()=>{const d=G.d;let left=10;$('#d-ctl').hidden=true;buzz(60);clearInterval(d.timer);d.timer=setInterval(()=>{left--;$('#d-timer').textContent=left;if(left<=3)buzz(20);if(left<=0){clearInterval(d.timer);$('#d-judge').hidden=false;buzz([80,40,80])}},1000)};
+function dareJudge(ok){const d=G.d;clearInterval(d.timer);const [ti,pi]=d.list[d.i],p=G.players[pi];if(ok)G.score[ti]++;d.i++;
+  showScore(L(ok?TX.dOk:TX.dFail).replace('{p}',pname(p)).replace('{t}',tname(G.teams[ti])),'',()=>dareStep())}
+$('#d-ok').onclick=()=>{buzz(30);dareJudge(true)};$('#d-fail').onclick=()=>{buzz(30);dareJudge(false)};
+
+/* rounds engine: ~25 minutes */
+const ROUNDS=['reflex','guess','dare','chal','guess','dare','chal','reflex'];
+function nextRound(){if(G.ri>=ROUNDS.length)return gameFinal();const r=ROUNDS[G.ri++];G.round=G.ri;({reflex:reflexStart,guess:guessStart,chal:chalStart,dare:dareStart})[r]()}
+function gameStart(){G.ri=0;G.round=0;G.d=null;nextRound()}
+
+/* round 3: challenge */
+const CH=[
+ B('Mímica: elétrico 28 à hora de ponta','Mime: tram 28 at rush hour'),B('Mímica: segurança do Lux às 6h','Mime: Lux bouncer at 6am'),B('Mímica: DJ que perdeu a pen','Mime: DJ who lost the USB stick'),B('Mímica: táxi que não para no Cais do Sodré','Mime: taxi that won\'t stop at Cais do Sodré'),
+ B('Mímica: sardinha na brasa','Mime: sardine on the grill'),B('Mímica: metro fechado às 2h','Mime: metro closed at 2am'),B('Mímica: pessoa a fingir que atende o telemóvel na pista','Mime: person fake-answering the phone on the dance floor'),
+ B('Desafio: fazer o outro rir em 20 s sem falar','Challenge: make the other laugh in 20 s without talking'),B('Desafio: descrever o Lux só com sons','Challenge: describe Lux using only sounds'),B('Desafio: dança sincronizada de 10 s, inventada agora','Challenge: 10 s synchronized dance, invented now'),
+ B('Mímica: pastel de nata a sair do forno','Mime: pastel de nata leaving the oven'),B('Mímica: turista perdido em Alfama com mapa de papel','Mime: tourist lost in Alfama with a paper map'),B('Mímica: gaivota a roubar uma sandes','Mime: seagull stealing a sandwich'),B('Mímica: fila do bar às 4h','Mime: bar queue at 4am'),
+ B('Desafio: recitar um poema de 4 versos sobre a imperial morna','Challenge: recite a 4-line poem about warm beer'),B('Desafio: vender a bicicleta ao júri como se fosse um carro de luxo','Challenge: pitch the bike to the jury like it is a luxury car'),B('Desafio: fazer a voz de GPS a dar direções para o bar','Challenge: do a GPS voice giving directions to the bar'),
+ B('Desafio: cantarolar uma música com a boca fechada, o par adivinha','Challenge: hum a song with mouth closed, partner guesses'),B('Desafio: contar uma história de 20 s em que tudo corre bem (impossível)','Challenge: tell a 20 s story where everything goes well (impossible)'),B('Desafio: imitar o segurança a recusar a entrada a um pombo','Challenge: impersonate the bouncer denying entry to a pigeon'),
+ B('Desafio: pose de estátua de Lisboa, o outro adivinha qual','Challenge: pose as a Lisbon statue, the other guesses which'),B('Desafio: convencer o júri de que conhecem o DJ, 20 s','Challenge: convince the jury you know the DJ, 20 s'),
+];
+function chalStart(){G.ch={i:0,timer:null,left:20,used:G.ch?G.ch.used:[]};chalStep()}
+function chalStep(){const c=G.ch;if(c.i>=G.teams.length)return nextRound();const ti=c.i,t=G.teams[ti];const pool=CH.filter(x=>!c.used.includes(x));c.word=rnd(pool);c.used.push(c.word);c.left=20;
+  const jury=G.judge!==null?pname(G.players[G.judge]):tname(G.teams[1-ti]);
+  const w=$('#ch-who');w.textContent=L(TX.chWho).replace('{t}',tname(t)).replace('{j}',jury);w.className='who '+G.players[t[0]].g;
+  const wd=$('#ch-word');wd.textContent=L(c.word);wd.classList.remove('show');$('#ch-timer').hidden=true;$('#ch-timer').textContent='20';$('#ch-ctl').hidden=false;$('#ch-judge').hidden=true;$('#ch-start').disabled=true;
+  $('#ch-title').textContent=L(TX.chTitle);$('#ch-hint').textContent=L(TX.chHint);go('s-chal')}
+$('#ch-reveal').onclick=()=>{const wd=$('#ch-word');wd.classList.add('show');buzz(20);setTimeout(()=>{wd.classList.remove('show');$('#ch-start').disabled=false},3000)};
+$('#ch-start').onclick=()=>{const c=G.ch;$('#ch-ctl').hidden=true;$('#ch-timer').hidden=false;$('#ch-title').textContent=L(TX.chGo);buzz(60);
+  c.timer=setInterval(()=>{c.left--;$('#ch-timer').textContent=c.left;if(c.left<=5)buzz(20);if(c.left<=0){clearInterval(c.timer);$('#ch-title').textContent=L(TX.chTime);$('#ch-word').classList.add('show');$('#ch-judge').hidden=false;buzz([80,40,80])}},1000)};
+function chalJudge(ok){const c=G.ch;clearInterval(c.timer);const ti=c.i;if(ok)G.score[ti]++;c.i++;
+  showScore(L(ok?TX.chOk:TX.chFail).replace('{t}',tname(G.teams[ti])),L(TX.chWas).replace('{w}','<b style="color:var(--d)">'+L(c.word)+'</b>'),()=>chalStep())}
+$('#ch-ok').onclick=()=>{buzz(30);chalJudge(true)};$('#ch-fail').onclick=()=>{buzz(30);chalJudge(false)};
+
+/* final: the bike */
+function gameFinal(){const mx=Math.max(...G.score);const ws=G.score.map((s,i)=>s===mx?i:-1).filter(i=>i>=0);G.winner=ws.length===1?ws[0]:null;
+  $('#f-title').textContent=G.winner===null?L(TX.fTie):L(TX.fWin).replace('{t}',tname(G.teams[G.winner]));
+  let prize=L(rnd(TX.fPrize));if(G.judge!==null&&G.winner!==null)prize+=' '+L(TX.fJudge).replace('{j}',pname(G.players[G.judge]));if(G.winner===null&&G.mode==='duel')prize+=' '+L(TX.duoTie);
+  $('#f-prize').textContent=prize;finalCastigo();confetti();buzz([60,40,60,40,150]);go('s-final')}
+function finalCastigo(){const losers=G.winner===null?G.teams.flat():G.teams.filter((t,i)=>i!==G.winner).flat();const allF=losers.every(i=>G.players[i].g==='f');
+  const lv=G.winner===null||allF?1:rnd([1,2,3]);const pick=rnd(C[lv]);
+  $('#f-cwho').textContent=G.winner===null?L(TX.fCwhoTie):L(TX.fCwho).replace('{t}',losers.map(i=>pname(G.players[i])).join(' + '));
+  $('#f-ctext').innerHTML=`<b>${L(pick[0])}</b><br><span class="small">${L(pick[1])}</span>`;$('#f-note').textContent=L(allF?TX.fNote:TX.fNoteM)}
+$('#f-again').onclick=()=>{buzz(20);finalCastigo()};
+$('#f-rematch').onclick=()=>{buzz(20);G.score=G.teams.map(()=>0);gameStart()};
+$('#f-prize2').onclick=()=>{buzz(20);$('#f-prize').textContent=L(rnd(TX.fPrize))};
+
+/* confetti */
+const cv=$('#fx'),cx=cv.getContext('2d');let ps=[];
+function confetti(){if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;cv.width=innerWidth;cv.height=innerHeight;const cols=['#FF4FA3','#C9FF3A','#5EE3FF','#FFC63A','#FFF4DC','#FF6A00'];
+  for(let i=0;i<140;i++)ps.push({x:innerWidth/2,y:innerHeight*.45,vx:(Math.random()-.5)*16,vy:-Math.random()*16-4,r:4+Math.random()*6,c:rnd(cols),a:Math.random()*6,s:(Math.random()-.5)*.3,l:90+Math.random()*40});
+  if(!confetti.run){confetti.run=true;tick()}}
+function tick(){cx.clearRect(0,0,cv.width,cv.height);ps=ps.filter(p=>p.l>0);ps.forEach(p=>{p.vy+=.45;p.x+=p.vx;p.y+=p.vy;p.vx*=.98;p.a+=p.s;p.l--;cx.save();cx.translate(p.x,p.y);cx.rotate(p.a);cx.fillStyle=p.c;cx.globalAlpha=Math.min(1,p.l/30);cx.fillRect(-p.r/2,-p.r/2,p.r,p.r*1.6);cx.restore()});
+  if(ps.length)requestAnimationFrame(tick);else{confetti.run=false;cx.clearRect(0,0,cv.width,cv.height)}}
+
+document.addEventListener('contextmenu',e=>{if(e.target.closest('.pad'))e.preventDefault()});
+reset();applyI();
+</script>
+
+</body>
+</html>

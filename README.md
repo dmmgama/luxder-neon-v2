@@ -1,23 +1,13 @@
-# Luxder — one app, all modes
+# Luxder — uma app, todos os modos
 
-## Open the app
+**Abrir: https://dmmgama.github.io/luxder-neon-v2/**
 
-https://dmmgama.github.io/luxder-neon-v2/
+Quatro modos PT/EN, seletor Néon/Talão e roda da sorte. Jogo da bicicleta, laboratório amoroso, 100 prompts de convencimento e Grill inteiramente de dois botões. Cada pergunta do Grill tem quatro seguimentos binários; nenhuma exige falar. Pausas cómicas fecham com um toque e mantêm o jogo intacto.
 
-This existing address is now the canonical unified app. It includes all four PT/EN modes, a Neon/Receipt appearance switch and a wheel of fortune. Theme and language switches preserve the active game. Choose which modes enter the wheel, spin, then choose whether to play the result. No automatic participation.
+- `index.html`: app completa, sem dependências externas.
+- [ENDERECOS-LUXDER.md](ENDERECOS-LUXDER.md): todos os sites, repos e arquivos.
+- [HERMES.md](HERMES.md): decisões finais e manutenção.
+- `source/`: fontes, geradores, testes e versões históricas.
+- `qa/`: capturas de verificação.
 
-- Bicycle game: 20 questions, 30 challenges, 104 pitches; 2–4 players, individual or teams.
-- Laboratory love: avatars and explicitly fictional romantic matches for all pairs.
-- Try to convince me: 100 bilingual prompts, ten unique prompts per game.
-- Grill me for dating: 20 topics with answer-specific follow-ups.
-
-All assets and code are contained in index.html. No build or runtime dependencies, paid services, API keys, accounts, storage, photos or text input. Prizes are virtual. Hosting request logs are managed by GitHub.
-
-Former separate versions redirect here:
-- https://dmmgama.github.io/luxder-night/
-- https://dmmgama.github.io/luxder-night/talao.html
-- https://dmmgama.github.io/luxder-talao-v2/
-
-The previous standalone version is preserved in the `standalone-v2` git tag. The old appearance remains available through the app's Receipt toggle.
-
-Validated in Chromium and WebKit with mobile layouts, all four modes, every wheel outcome, disabled choices, interrupted spins, reduced motion, live theme/language changes and timer cancellation. No physical iPhone test.
+GitHub Pages gratuito, HTTPS. Participação opcional, sem recolha de dados. Prémio virtual; ciência amorosa inventada. As versões anteriores ficam preservadas nas tags indicadas no registo.
