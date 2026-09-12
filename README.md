@@ -1,21 +1,23 @@
-# Luxder neon v2
+# Luxder — one app, all modes
 
-Standalone PT/EN party app. No build, backend, API keys, tracking, fonts or external assets.
+## Open the app
 
-## Four modes
+https://dmmgama.github.io/luxder-neon-v2/
 
-1. Bicycle game: 2–4 players, solo, 1v2 or selected 2v2 pairs; 20 absurd questions, 30 challenges and 104 pitches. One or three rounds. Fair team voting.
-2. Laboratory love: 2–4 people answer five questions, receive avatars and fictional romantic matches for every pair. Five matching answers = 100%; three or more = fictional match. Ten rotating romance questions supplement the three avatar questions. Results are clearly labelled as made-up science, not real attraction or consent.
-3. Try to convince me: 100 individually authored bilingual prompts. Draw 10 without repetition per game; take turns, optionally use the ten-second timer, approve/reject, delegate to the developers or pass. The deck is shuffled without repeats until exhausted.
-4. Grill me for dating: 20 topics, six drawn per session. Guess about the other person, let them confirm or correct, then ask a follow-up specific to their answer. Turns alternate; any question can be skipped.
+This existing address is now the canonical unified app. It includes all four PT/EN modes, a Neon/Receipt appearance switch and a wheel of fortune. Theme and language switches preserve the active game. Choose which modes enter the wheel, spin, then choose whether to play the result. No automatic participation.
 
-Each mode has its own artwork, typography and palette. All prizes are explicitly virtual bicycles. No pressure to participate or continue. No personal data is stored; runtime state is discarded on reload. GitHub hosting has its own request logs.
+- Bicycle game: 20 questions, 30 challenges, 104 pitches; 2–4 players, individual or teams.
+- Laboratory love: avatars and explicitly fictional romantic matches for all pairs.
+- Try to convince me: 100 bilingual prompts, ten unique prompts per game.
+- Grill me for dating: 20 topics with answer-specific follow-ups.
 
-## Links
+All assets and code are contained in index.html. No build or runtime dependencies, paid services, API keys, accounts, storage, photos or text input. Prizes are virtual. Hosting request logs are managed by GitHub.
 
-- This version: https://dmmgama.github.io/luxder-neon-v2/
-- Other v2 visual: https://dmmgama.github.io/luxder-talao-v2/
-- Original v1 preserved: https://dmmgama.github.io/luxder-night/
-- Original v1 receipt: https://dmmgama.github.io/luxder-night/talao.html
+Former separate versions redirect here:
+- https://dmmgama.github.io/luxder-night/
+- https://dmmgama.github.io/luxder-night/talao.html
+- https://dmmgama.github.io/luxder-talao-v2/
 
-GitHub Pages on a public repository with HTTPS. No paid services. Open in Safari on iPhone. Tested with mobile viewports in Chromium and WebKit, not on a physical iPhone.
+The previous standalone version is preserved in the `standalone-v2` git tag. The old appearance remains available through the app's Receipt toggle.
+
+Validated in Chromium and WebKit with mobile layouts, all four modes, every wheel outcome, disabled choices, interrupted spins, reduced motion, live theme/language changes and timer cancellation. No physical iPhone test.
